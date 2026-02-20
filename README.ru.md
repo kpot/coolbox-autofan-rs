@@ -1,5 +1,7 @@
 # Coolbox Autofan REST API
 
+[English version](./README.md)
+
 [Coolbox AutoFan Pro](https://bitok.shop/automatic-regulyator-oborotov-coolbox-autofan-hiveos/) — это плата, которую используют многие майнеры криптовалют для автоматического управления вентиляторами охлаждения майнинговых ферм.
 Плата поддерживается только в HiveOS / RaveOS — это специализированные на майнинге дистрибутивы Linux.
 

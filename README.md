@@ -1,6 +1,6 @@
-[English](../../README.md) | [Русский](../../README.ru.md)
-
 # Coolbox Autofan REST API
+
+[Версия на русском](./README.ru.md)
 
 [Coolbox AutoFan Pro](https://bitok.shop/automatic-regulyator-oborotov-coolbox-autofan-hiveos/)
 is a board used by many crypto-miners to automatically control cooling fans of their mining rigs.
