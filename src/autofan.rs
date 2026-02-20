@@ -52,11 +52,9 @@ fn listening_thread(
         stream_bus: &Arc<Mutex<Bus<Vec<u8>>>>,
         broadcast_buffer: &mut Vec<u8>,
     ) {
-        if broadcast_buffer.len() > 0 {
-            if let Ok(mut bus) = stream_bus.lock() {
-                let to_broadcast = std::mem::take(broadcast_buffer);
-                bus.broadcast(to_broadcast);
-            }
+        if !broadcast_buffer.is_empty() && let Ok(mut bus) = stream_bus.lock() {
+            let to_broadcast = std::mem::take(broadcast_buffer);
+            bus.broadcast(to_broadcast);
         }
     }
 
@@ -91,16 +89,14 @@ fn listening_thread(
                 if is_command_started.load(Ordering::Relaxed) {
                     if bytes == 1 {
                         command_buffer.extend_from_slice(&device_buffer);
-                    } else {
-                        if is_command_delivered.load(Ordering::Relaxed) {
-                            // EOF. Time to dump whatever we've read so far
-                            dump_command_buffer(
-                                &is_command_started,
-                                &is_command_delivered,
-                                &response_sender,
-                                &mut command_buffer,
-                            );
-                        }
+                    } else if is_command_delivered.load(Ordering::Relaxed) {
+                        // EOF. Time to dump whatever we've read so far
+                        dump_command_buffer(
+                            &is_command_started,
+                            &is_command_delivered,
+                            &response_sender,
+                            &mut command_buffer,
+                        );
                     }
                 }
             }

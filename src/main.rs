@@ -51,12 +51,11 @@ async fn main() -> io::Result<()> {
         CoolboxAutofan::dummy()?
     } else {
         CoolboxAutofan::try_from(cli.coolbox_port.clone()).map_err(|e| {
-            io::Error::new(
-                io::ErrorKind::Other,
+            io::Error::other(
                 format!(
                     "Unable to open terminal {}: {}",
                     &cli.coolbox_port,
-                    e.to_string()
+                    e
                 ),
             )
         })?

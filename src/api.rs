@@ -134,21 +134,21 @@ async fn update(
     const AUTO_FAN_MODE: i32 = 2;
     const MANUAL_FAN_MODE: i32 = 1;
     if update.core_temp.len() != update.mem_temp.len()
-        && update.core_temp.len() != 0
-        && update.mem_temp.len() != 0
+        && !update.core_temp.is_empty()
+        && !update.mem_temp.is_empty()
     {
         return HttpResponse::UnprocessableEntity().json(ApiReply::Error(
             "Both arrays of core and VRAM temps, if provided, must be of the same size".into(),
         ));
     }
     let mut result_json_chunks = serde_json::Map::<String, serde_json::Value>::new();
-    if update.core_temp.len() > 0 {
+    if !update.core_temp.is_empty() {
         result_json_chunks.insert("gpu_temp".into(), update.core_temp.into());
         if update.fan_speed.is_none() {
             result_json_chunks.insert("fan_mode".into(), AUTO_FAN_MODE.into());
         }
     }
-    if update.mem_temp.len() > 0 {
+    if !update.mem_temp.is_empty() {
         result_json_chunks.insert("gpu_mem".into(), update.mem_temp.into());
         if update.fan_speed.is_none() {
             result_json_chunks.insert("fan_mode".into(), AUTO_FAN_MODE.into());
